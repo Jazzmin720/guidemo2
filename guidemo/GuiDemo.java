@@ -196,18 +196,32 @@ public class GuiDemo extends JFrame {
 		ChooseBackgroundAction(String text) {
 			super(text);
 			this.text = text;
-			if (!text.equals("Custom...") && !text.equals("Color...")) {
+
+			// Create icons for "Custom..." and "Color..." actions
+			if (text.equals("Custom...")) {
+				putValue(Action.SMALL_ICON,
+						Util.iconFromResource("resources/action_icons/fileopen.png"));
+				putValue(Action.SHORT_DESCRIPTION, "Select an image file to use as the background.");
+			} else if (text.equals("Color...")) {
+				ImageIcon colorIcon = createColorIcon();
+				putValue(Action.SMALL_ICON, colorIcon);
+				putValue(Action.SHORT_DESCRIPTION, "Use a solid color for background.");
+			} else {
 				putValue(Action.SMALL_ICON,
 						Util.iconFromResource("resources/images/" + text.toLowerCase() + "_thumbnail.jpeg"));
-			}
-			if (text.equals("Color..."))
-				putValue(Action.SHORT_DESCRIPTION,
-						"<html>Use a solid color for background<br>instead of an image.</html>");
-			else if (text.equals("Custom..."))
-				putValue(Action.SHORT_DESCRIPTION, "<html>Select an image file<br>to use as the background.</html>");
-			else
 				putValue(Action.SHORT_DESCRIPTION, "Use this image as the background.");
+			}
+		}
 
+		private ImageIcon createColorIcon() {
+			BufferedImage colorImage = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
+			Graphics g = colorImage.createGraphics();
+			g.setColor(Color.DARK_GRAY);
+			g.fillRect(0, 0, 32, 32);
+			g.setColor(Color.CYAN);
+			g.fillRect(8, 8, 16, 16);
+			g.dispose();
+			return new ImageIcon(colorImage);
 		}
 
 		public void actionPerformed(ActionEvent evt) {
