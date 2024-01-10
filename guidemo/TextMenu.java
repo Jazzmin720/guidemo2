@@ -80,6 +80,27 @@ public class TextMenu extends JMenu {
 				panel.repaint();
 			}
 		});
+
+		// Add a menu item for setting line height multiplier
+		JMenuItem lineHeight = new JMenuItem("Set Line Height...");
+		lineHeight.addActionListener(e -> {
+			String currentLineHeight = String.valueOf(panel.getTextItem().getLineHeightMultiplier());
+			String newLineHeightStr = JOptionPane.showInputDialog(panel, "Enter new line height multiplier:",
+					currentLineHeight);
+			if (newLineHeightStr != null && newLineHeightStr.trim().length() > 0) {
+				try {
+					double newLineHeight = Double.parseDouble(newLineHeightStr.trim());
+					if (newLineHeight <= 0)
+						throw new IllegalArgumentException();
+					panel.getTextItem().setLineHeightMultiplier(newLineHeight);
+					panel.repaint();
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(panel, newLineHeightStr
+							+ " is not a valid line height multiplier.\nPlease enter a positive number.");
+				}
+			}
+		});
+		add(lineHeight);
 		add(change);
 		addSeparator();
 		add(size);
