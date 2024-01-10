@@ -56,6 +56,13 @@ public class GuiDemo extends JFrame {
 		IconSupport iconSupport = new IconSupport(drawPanel);
 		content.add(iconSupport.createToolbar(true), BorderLayout.SOUTH);
 
+		// Add the icon toolbar to the SOUTH position of the layout
+		content.add(iconSupport.createToolbar(true), BorderLayout.SOUTH);
+
+		// Add the background toolbar to the NORTH position of the layout
+		JToolBar backgroundToolbar = makeToolbar();
+		content.add(backgroundToolbar, BorderLayout.NORTH);
+
 		// Create the menu bar and add it to the frame.
 		JMenuBar menuBar = new JMenuBar();
 
@@ -227,6 +234,22 @@ public class GuiDemo extends JFrame {
 				drawPanel.setBackgroundImage(bg);
 			}
 		}
+	}
+
+	private JToolBar makeToolbar() {
+		JToolBar toolbar = new JToolBar("Background Tools");
+		toolbar.add(newPictureAction);
+		toolbar.add(saveImageAction);
+		toolbar.addSeparator();
+		toolbar.add(new ChooseBackgroundAction("Mandelbrot"));
+		toolbar.add(new ChooseBackgroundAction("Earthrise"));
+		toolbar.add(new ChooseBackgroundAction("Sunset"));
+		toolbar.add(new ChooseBackgroundAction("Cloud"));
+		toolbar.add(new ChooseBackgroundAction("Eagle_nebula"));
+		toolbar.addSeparator();
+		toolbar.add(new ChooseBackgroundAction("Custom..."));
+		toolbar.add(new ChooseBackgroundAction("Color..."));
+		return toolbar;
 	}
 
 }
